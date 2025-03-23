@@ -1,0 +1,623 @@
+<?php
+$section = isset($_GET['section']) ? $_GET['section'] : 'landing';
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeaderWazowski - 3D Artist Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #0a1929;
+            --secondary-bg: #0f2942;
+            --accent-color: #4a9eff;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            background-image: url('https://i.postimg.cc/15XJCYZk/wp10231012-kakashi-blue-wallpapers.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        .sidebar {
+            width: 100%;
+            background-color: rgba(15, 41, 66, 0.95);
+            padding: 1rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar.hidden {
+            transform: translateY(-100%);
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        .profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            margin-bottom: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(74, 158, 255, 0.7);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            padding: 3px;
+            cursor: pointer;
+        }
+
+        .profile img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(74, 158, 255, 0.9);
+            border-color: #7ab8ff;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .profile h2 {
+            color: var(--text-primary);
+            margin-bottom: 0;
+            font-size: 1.5rem;
+        }
+
+        .profile h3 {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin-bottom: 0;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            margin-top: 0;
+            padding: 2rem;
+            width: 100%;
+            transition: margin-top 0.3s ease;
+        }
+
+        .main-content.expanded {
+            margin-top: 0;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+        }
+
+        .about-section {
+            background: rgba(15, 41, 66, 0.8);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 1rem;
+            border: 1px solid rgba(74, 158, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .about-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .about-section .disclaimer {
+            font-style: italic;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding: 1rem;
+            border-left: 3px solid var(--accent-color);
+            margin-top: 1.5rem;
+            background: rgba(74, 158, 255, 0.1);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background-color: rgba(15, 41, 66, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(74, 158, 255, 0.2);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-info h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            background: rgba(15, 41, 66, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .price-table th,
+        .price-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(74, 158, 255, 0.2);
+        }
+
+        .price-table th {
+            background-color: rgba(74, 158, 255, 0.2);
+            color: var(--accent-color);
+        }
+
+        .price-table tr:hover {
+            background-color: rgba(74, 158, 255, 0.1);
+        }
+
+        .landing-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(15, 41, 66, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin: 2rem;
+            border: 1px solid rgba(74, 158, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .landing-section h1 {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            color: var(--accent-color);
+            text-shadow: 0 0 20px rgba(74, 158, 255, 0.5);
+            background: linear-gradient(45deg, #4a9eff, #7ab8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .landing-section h2 {
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(74, 158, 255, 0.3);
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px rgba(74, 158, 255, 0.5);
+            }
+            to {
+                text-shadow: 0 0 30px rgba(74, 158, 255, 0.8);
+            }
+        }
+
+        .landing-section .social-links {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .landing-section .social-links a {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            background: rgba(74, 158, 255, 0.2);
+            border: 1px solid rgba(74, 158, 255, 0.3);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-radius: 12px;
+        }
+
+        .landing-section .social-links img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .enter-button {
+            margin-top: 2rem;
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(45deg, #4a9eff, #7ab8ff);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+        }
+
+        .enter-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 158, 255, 0.4);
+            background: linear-gradient(45deg, #7ab8ff, #4a9eff);
+        }
+
+        .show-sidebar-button {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent-color);
+            color: var(--text-primary);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .show-sidebar-button.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .show-sidebar-button:hover {
+            background: #7ab8ff;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .profile {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+                gap: 0.5rem;
+            }
+
+            .nav-links a {
+                text-align: center;
+            }
+
+            .show-sidebar-button {
+                margin: 0 0 1rem 0;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .landing-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .landing-section .social-links a {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .enter-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .about-section {
+                padding: 1.5rem;
+            }
+
+            .project-card img {
+                height: 150px;
+            }
+
+            .project-info {
+                padding: 1rem;
+            }
+        }
+
+        .go-home-button {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #4a9eff, #7ab8ff);
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1002;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .go-home-button.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .go-home-button:hover {
+            transform: translate(-50%, -50%) translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 158, 255, 0.4);
+            background: linear-gradient(45deg, #7ab8ff, #4a9eff);
+        }
+    </style>
+</head>
+<body>
+    <button class="show-sidebar-button" onclick="showSidebar()">☰ Show Menu</button>
+    <div class="sidebar">
+        <div class="profile">
+            <img src="https://i.postimg.cc/xCFbc5Fm/leader.png" alt="LeaderWazowski Logo" onclick="toggleSidebar()">
+            <div>
+                <h2>LeaderWazowski</h2>
+                <h3>3D Artist & Modeler</h3>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="<?php echo $section === 'landing' ? 'active' : ''; ?>" onclick="showSection('landing')">Home</a></li>
+            <li><a href="#" class="<?php echo $section === 'about' ? 'active' : ''; ?>" onclick="showSection('about')">About Me</a></li>
+            <li><a href="#" class="<?php echo $section === 'projects' ? 'active' : ''; ?>" onclick="showSection('projects')">Projects</a></li>
+            <li><a href="#" class="<?php echo $section === 'prices' ? 'active' : ''; ?>" onclick="showSection('prices')">Prices</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div id="landing" class="section <?php echo $section === 'landing' ? 'active' : ''; ?>">
+            <div class="landing-section">
+                <h1>LeaderWazowski</h1>
+                <h2>3D Artist & Modeler</h2>
+                <div class="social-links">
+                    <a href="https://www.roblox.com/users/5272410494/profile" target="_blank">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Roblox_player_icon_black.svg/1200px-Roblox_player_icon_black.svg.png" alt="Roblox">
+                        Roblox
+                    </a>
+                    <a href="https://discord.com/channels/@me/1278465508697444382" target="_blank">
+                        <img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6ca814282eca7172c6_icon_clyde_white_RGB.svg" alt="Discord">
+                        Discord
+                    </a>
+                </div>
+                <a href="#" class="enter-button" onclick="showSection('about')">Enter Portfolio</a>
+            </div>
+        </div>
+
+        <div id="about" class="section <?php echo $section === 'about' ? 'active' : ''; ?>">
+            <h1>About Me</h1>
+            <div class="about-section">
+                <p>As a passionate 3D artist, I specialize in crafting high-quality models with attention to detail, accuracy, and realism. With experience in Blender and Roblox Studio, I focus on bringing creative visions to life—whether it's intricate hard-surface models, realistic props, or immersive environments.</p>
+                <div class="disclaimer">
+                    <p>Disclaimer: A lot of these models are from when I was a newer modeler. Many of these may not be the best currently, but I'm still working on my portfolio as we speak.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="projects" class="section <?php echo $section === 'projects' ? 'active' : ''; ?>">
+            <h1>Projects</h1>
+            <div class="project-grid">
+                <div class="project-card">
+                    <img src="https://i.postimg.cc/DzPfk10V/cap.png" alt="Cap Model">
+                    <div class="project-info">
+                        <h3>Cap Model</h3>
+                        <p>A detailed cap model created in Blender</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://i.postimg.cc/tTrX7yF2/crown.png" alt="Crown Model">
+                    <div class="project-info">
+                        <h3>Crown Model</h3>
+                        <p>Detailed crown with geometric patterns</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://i.postimg.cc/TP624tRq/beret.png" alt="Beret Model">
+                    <div class="project-info">
+                        <h3>Beret Model</h3>
+                        <p>Stylish beret with realistic fabric details</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://i.postimg.cc/B6ZSqtPj/chest.png" alt="Chest Model">
+                    <div class="project-info">
+                        <h3>Chest Model</h3>
+                        <p>Detailed chest with realistic textures and details</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="prices" class="section <?php echo $section === 'prices' ? 'active' : ''; ?>">
+            <h1>Prices</h1>
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Description</th>
+                        <th>Price Range</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Simple Props</td>
+                        <td>Basic 3D models with minimal details</td>
+                        <td>100 - 300 Robux</td>
+                    </tr>
+                    <tr>
+                        <td>Detailed Props</td>
+                        <td>Complex models with high detail and textures</td>
+                        <td>300 - 1,000 Robux</td>
+                    </tr>
+                   
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Show sidebar and menu button only for About, Projects, and Prices sections
+            if (sectionId === 'about' || sectionId === 'projects' || sectionId === 'prices') {
+                document.querySelector('.sidebar').classList.remove('hidden');
+                document.querySelector('.main-content').classList.remove('expanded');
+                document.querySelector('.show-sidebar-button').classList.remove('visible');
+            } else {
+                document.querySelector('.sidebar').classList.add('hidden');
+                document.querySelector('.main-content').classList.add('expanded');
+                document.querySelector('.show-sidebar-button').classList.add('visible');
+            }
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const showButton = document.querySelector('.show-sidebar-button');
+            
+            sidebar.classList.toggle('hidden');
+            mainContent.classList.toggle('expanded');
+            showButton.classList.add('visible');
+        }
+
+        function showSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const showButton = document.querySelector('.show-sidebar-button');
+            
+            sidebar.classList.remove('hidden');
+            mainContent.classList.remove('expanded');
+            showButton.classList.remove('visible');
+        }
+
+        // Initialize sidebar state
+        document.addEventListener('DOMContentLoaded', function() {
+            const section = '<?php echo $section; ?>';
+            if (section === 'landing') {
+                document.querySelector('.sidebar').classList.add('hidden');
+                document.querySelector('.main-content').classList.add('expanded');
+                document.querySelector('.show-sidebar-button').classList.add('visible');
+                document.getElementById('landing').classList.add('active');
+            } else if (section === 'about' || section === 'projects' || section === 'prices') {
+                document.querySelector('.sidebar').classList.remove('hidden');
+                document.querySelector('.main-content').classList.remove('expanded');
+                document.querySelector('.show-sidebar-button').classList.remove('visible');
+            }
+        });
+    </script>
+</body>
+</html> 
