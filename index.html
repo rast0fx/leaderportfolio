@@ -36,6 +36,11 @@ $section = 'landing';
             background-position: center;
             background-attachment: fixed;
             background-repeat: no-repeat;
+            overflow-y: hidden;
+        }
+
+        body.scrollable {
+            overflow-y: auto;
         }
 
         .sidebar {
@@ -494,9 +499,26 @@ $section = 'landing';
             box-shadow: 0 8px 25px rgba(74, 158, 255, 0.4);
             background: linear-gradient(45deg, #7ab8ff, #4a9eff);
         }
+
+        .watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.8rem;
+            font-family: 'Inter', sans-serif;
+            pointer-events: none;
+            z-index: 1000;
+            background: rgba(15, 41, 66, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(74, 158, 255, 0.2);
+        }
     </style>
 </head>
 <body>
+    <div class="watermark">Made by Mhamad Koussa (rast0fx)</div>
     <button class="show-sidebar-button" onclick="showSidebar()">☰ Show Menu</button>
     <div class="sidebar">
         <div class="profile">
@@ -609,14 +631,16 @@ $section = 'landing';
             // Navigate to About section
             showSection('about');
             
-            // Show the top bar
+            // Show the top bar and enable scrolling
             const sidebar = document.querySelector('.sidebar');
             const mainContent = document.querySelector('.main-content');
             const showButton = document.querySelector('.show-sidebar-button');
+            const body = document.body;
             
             sidebar.classList.remove('hidden');
             mainContent.classList.remove('expanded');
             showButton.classList.remove('visible');
+            body.classList.add('scrollable');
             
             // Highlight the About Me link
             document.querySelectorAll('.nav-links a').forEach(link => {
@@ -654,19 +678,22 @@ $section = 'landing';
                 }
             });
 
-            // Handle sidebar visibility
+            // Handle sidebar visibility and scrolling
             const sidebar = document.querySelector('.sidebar');
             const mainContent = document.querySelector('.main-content');
             const showButton = document.querySelector('.show-sidebar-button');
+            const body = document.body;
 
             if (sectionId === 'landing') {
                 sidebar.classList.add('hidden');
                 mainContent.classList.add('expanded');
                 showButton.classList.remove('visible');
+                body.classList.remove('scrollable');
             } else {
                 sidebar.classList.remove('hidden');
                 mainContent.classList.remove('expanded');
                 showButton.classList.remove('visible');
+                body.classList.add('scrollable');
             }
         }
 
