@@ -1,2165 +1,733 @@
+<?php
+$section = 'landing';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Mhamad Koussa - Portfolio </title>
+    <title>LeaderWazowski - 3D Artist Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
+        :root {
+            --primary-bg: #0a1929;
+            --secondary-bg: #0f2942;
+            --accent-color: #4a9eff;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            background-color: #040811;
-            color: #e2e8f0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
             line-height: 1.6;
-        }
-
-        header {
-            background: #0f151d;
-            color: #dddff5;
-            padding: 40px 20px;
+            min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 40px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-            margin-top: 60px;
+            background-image: url('https://i.postimg.cc/15XJCYZk/wp10231012-kakashi-blue-wallpapers.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            overflow-y: hidden;
         }
 
-        header::before {
-            content: '';
-            position: absolute;
+        body.scrollable {
+            overflow-y: auto;
+        }
+
+        .sidebar {
+            width: 100%;
+            background-color: rgba(15, 41, 66, 0.95);
+            padding: 1rem;
+            position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, rgba(129, 140, 248, 0.1), rgba(99, 102, 241, 0.1));
-            z-index: 1;
-        }
-
-        .profile-pic {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #818cf8;
-            transition: all 0.5s ease-in-out;
-            box-shadow: 0 0 30px rgba(129, 140, 248, 0.3);
-            cursor: pointer;
-            position: relative;
-            z-index: 2;
-        }
-
-        .profile-pic:hover {
-            transform: rotate(360deg) scale(1.05);
-            box-shadow: 0 0 40px rgba(129, 140, 248, 0.5);
-        }
-
-        .header-text {
-            position: relative;
-            z-index: 2;
-        }
-
-        .header-text h1 {
-            margin-bottom: 10px;
-            font-size: 2.5rem;
-            letter-spacing: 0.5px;
-            background: linear-gradient(45deg, #818cf8, #6366f1);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 700;
-        }
-
-        .header-text p {
-            margin-top: 0;
-            font-size: 1.2rem;
-            color: #94a3b8;
-            line-height: 1.8;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 80px auto 0;  /* Added top margin */
-            padding: 0 20px;
-        }
-
-        .tab-container {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
             display: flex;
-            justify-content: center;
-            margin: 40px 0 30px;
-            flex-wrap: wrap;
-            gap: 15px;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .tab-button {
-            background: linear-gradient(145deg, #0f151d, #0f151d);
-            color: white;
-            padding: 14px 28px;
-            border: none;
-            cursor: pointer;
-            border-radius: 8px;
+        .sidebar.hidden {
+            transform: translateY(-100%);
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 0;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            border: 1px solid rgba(74, 158, 255, 0.3);
+        }
+
+        .profile img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid var(--accent-color);
+            margin-bottom: 0;
             transition: all 0.3s ease;
-            font-weight: 600;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 0 50px rgba(74, 158, 255, 1);
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(8px);
+            padding: 5px;
         }
 
-        .tab-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
+        .profile img:hover {
+            transform: none;
+            box-shadow: 0 0 60px rgba(74, 158, 255, 1);
+            border-color: #7ab8ff;
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .profile h2 {
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+        }
+
+        .profile h3 {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 0;
+            text-shadow: 0 0 8px rgba(74, 158, 255, 0.3);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin-bottom: 0;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            margin-top: 0;
+            padding: 2rem;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
+            transition: margin-top 0.3s ease;
         }
 
-        .tab-button:hover::before {
-            left: 100%;
+        .main-content.expanded {
+            margin-top: 0;
         }
 
-        .tab-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        .content {
+        .section {
             display: none;
-            padding: 20px;
-            background: #0f151d;
-            border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            margin: 80px auto 30px;
-            max-width: 95%;
-            width: 900px;
-            animation: fadeIn 0.5s ease-out;
-            border: 1px solid rgba(129, 140, 248, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
         }
 
         @keyframes fadeIn {
-            from { 
-                opacity: 0; 
-                transform: translateY(20px); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .active {
-            display: block;
+        h1 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
         }
 
-        h2 {
-            color: #818cf8;
-            border-bottom: 2px solid #334155;
-            padding-bottom: 15px;
-            margin-top: 0;
-            font-size: 2rem;
-            font-weight: 600;
-            position: relative;
+        .about-section {
+            background: rgba(15, 41, 66, 0.8);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 1rem;
+            border: 1px solid rgba(74, 158, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
         }
 
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 50px;
-            height: 2px;
-            background: linear-gradient(90deg, #818cf8, transparent);
+        .about-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
         }
 
-        a {
-            color: #818cf8;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            position: relative;
+        .about-section .disclaimer {
+            font-style: italic;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding: 1rem;
+            border-left: 3px solid var(--accent-color);
+            margin-top: 1.5rem;
+            background: rgba(74, 158, 255, 0.1);
+            border-radius: 0 8px 8px 0;
         }
 
-        a:hover {
-            color: #6366f1;
-        }
-
-        a::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: -2px;
-            left: 0;
-            background: linear-gradient(90deg, #818cf8, transparent);
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.3s ease;
-        }
-
-        a:hover::after {
-            transform: scaleX(1);
-            transform-origin: left;
-        }
-
-        .certificate-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-            width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .certificate {
-            width: 300px;
-            height: auto;
-            aspect-ratio: 1;
-            object-fit: cover;
-            margin: 0 auto;
-            display: block;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .certificate:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(129, 140, 248, 0.4);
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 30px;
-        }
-
-        .social-icon {
-            font-size: 2.2rem;
-            color: #94a3b8;
-            transition: all 0.4s ease;
-            position: relative;
-        }
-
-        .social-icon:hover {
-            transform: translateY(-5px) scale(1.1);
-            color: #818cf8;
-        }
-
-        .instagram:hover { color: #E1306C; }
-        .tiktok:hover { color: #69C9D0; }
-        .discord:hover { color: #5865F2; }
-        .whatsapp:hover { color: #25D366; }
-
-        footer {
-            margin-top: 60px;
-            padding: 30px;
-            background: #1e293b;
-            color: #94a3b8;
-            font-size: 1rem;
-            border-top: 1px solid rgba(129, 140, 248, 0.1);
-        }
-
-        .project-gallery {
+        .project-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
         .project-card {
-            background: #334155;
-            border-radius: 16px;
-            padding: 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            transition: all 0.4s ease;
-            border: 1px solid rgba(129, 140, 248, 0.1);
-            position: relative;
+            background-color: rgba(15, 41, 66, 0.8);
+            border-radius: 12px;
             overflow: hidden;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #0e112c, #0c0c3c);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
-        }
-
-        .project-card:hover::before {
-            transform: scaleX(1);
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(74, 158, 255, 0.2);
         }
 
         .project-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .project-title {
-            color: #818cf8;
-            font-size: 1.6rem;
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .project-description {
-            color: #94a3b8;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .project-preview {
+        .project-card img {
             width: 100%;
             height: 200px;
-            border-radius: 12px;
-            margin-bottom: 20px;
             object-fit: cover;
-            border: 2px solid #334155;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
         }
 
-        .project-card:hover .project-preview {
-            border-color: #818cf8;
+        .project-info {
+            padding: 1.5rem;
         }
 
-        .view-project-btn {
-            background: linear-gradient(145deg, #6366f1, #818cf8);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            margin-top: 15px;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        .project-info h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
         }
 
-        .view-project-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        .project-tags {
-            margin-top: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .project-tag {
-            background: #475569;
-            color: #94a3b8;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .project-tag:hover {
-            background: #818cf8;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                padding: 30px 15px;
-            }
-            
-            .profile-pic {
-                width: 140px;
-                height: 140px;
-            }
-            
-            .header-text h1 {
-                font-size: 2rem;
-            }
-            
-            .tab-button {
-                padding: 12px 20px;
-                font-size: 1rem;
-            }
-            
-            .content {
-                padding: 25px 15px;
-            }
-            
-            .project-card {
-                padding: 20px;
-            }
-        }
-
-        /* Add new navbar styles */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(15, 21, 29, 0.95);
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            background: rgba(15, 41, 66, 0.8);
             backdrop-filter: blur(10px);
-            padding: 0.8rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
         }
 
-        .navbar-logo {
+        .price-table th,
+        .price-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(74, 158, 255, 0.2);
+        }
+
+        .price-table th {
+            background-color: rgba(74, 158, 255, 0.2);
+            color: var(--accent-color);
+        }
+
+        .price-table tr:hover {
+            background-color: rgba(74, 158, 255, 0.1);
+        }
+
+        .landing-section {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            gap: 0.5rem;
-            text-decoration: none;
-            color: #e2e8f0;
-            max-width: 60%;
-            position: relative;
-            animation: pulse 2s infinite;
-        }
-
-        .navbar-logo .logo-content {
-            display: flex;
             align-items: center;
-            gap: 1rem;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(15, 41, 66, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin: 2rem;
+            border: 1px solid rgba(74, 158, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
+        .landing-section h1 {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            color: var(--accent-color);
+            text-shadow: 0 0 20px rgba(74, 158, 255, 0.5);
+            background: linear-gradient(45deg, #4a9eff, #7ab8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
         }
 
-        .navbar-logo img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid #818cf8;
-            transition: all 0.3s ease;
-            flex-shrink: 0;
-            animation: rotate 3s infinite linear;
-        }
-
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .navbar-logo span {
-            font-size: 0.9rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            animation: glow 2s infinite alternate;
+        .landing-section h2 {
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(74, 158, 255, 0.3);
         }
 
         @keyframes glow {
             from {
-                text-shadow: 0 0 5px rgba(129, 140, 248, 0.5);
+                text-shadow: 0 0 20px rgba(74, 158, 255, 0.5);
             }
             to {
-                text-shadow: 0 0 15px rgba(129, 140, 248, 0.8);
+                text-shadow: 0 0 30px rgba(74, 158, 255, 0.8);
             }
         }
 
-        .navbar-logo:hover img {
-            transform: rotate(360deg);
-            border-color: #6366f1;
+        .landing-section .leader-logo {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 6px solid var(--accent-color);
+            margin-bottom: 2.5rem;
+            box-shadow: 0 0 80px rgba(74, 158, 255, 1);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            padding: 8px;
+            animation: float 3s ease-in-out infinite;
         }
 
-        .navbar-links {
+        .landing-section .social-links {
+            margin-top: 2.5rem;
             display: flex;
             gap: 2rem;
             align-items: center;
         }
 
-        .navbar-link {
-            color: #e2e8f0;
+        .landing-section .social-links a {
+            padding: 1.2rem 2.5rem;
+            font-size: 1.3rem;
+            background: rgba(74, 158, 255, 0.25);
+            border: 2px solid rgba(74, 158, 255, 0.4);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-radius: 15px;
+            color: var(--text-primary);
             text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+        }
+
+        .landing-section .social-links a:hover {
+            transform: translateY(-5px);
+            background: rgba(74, 158, 255, 0.35);
+            border-color: rgba(74, 158, 255, 0.6);
+            box-shadow: 0 8px 25px rgba(74, 158, 255, 0.5);
+        }
+
+        .landing-section .social-links img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
             transition: all 0.3s ease;
         }
 
-        .navbar-link:hover {
-            background: rgba(129, 140, 248, 0.1);
-            color: #818cf8;
+        .landing-section .social-links a:hover img {
+            transform: scale(1.1);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+                box-shadow: 0 0 80px rgba(74, 158, 255, 0.9);
+            }
+            50% {
+                transform: translateY(-15px);
+                box-shadow: 0 0 100px rgba(74, 158, 255, 1);
+            }
+            100% {
+                transform: translateY(0px);
+                box-shadow: 0 0 80px rgba(74, 158, 255, 0.9);
+            }
+        }
+
+        .enter-button {
+            margin-top: 2rem;
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(45deg, #4a9eff, #7ab8ff);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+        }
+
+        .enter-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 158, 255, 0.4);
+            background: linear-gradient(45deg, #7ab8ff, #4a9eff);
+        }
+
+        .show-sidebar-button {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent-color);
+            color: var(--text-primary);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .show-sidebar-button.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .show-sidebar-button:hover {
+            background: #7ab8ff;
             transform: translateY(-2px);
         }
 
-        .navbar-link.active {
-            background: #818cf8;
-            color: white;
-        }
-
+        /* Responsive Design */
         @media screen and (max-width: 768px) {
-            .navbar {
+            .sidebar {
                 flex-direction: column;
                 padding: 1rem;
             }
 
-            .navbar-logo {
-                max-width: 100%;
-                margin-bottom: 1rem;
+            .profile {
+                width: 100%;
                 justify-content: center;
-                text-align: center;
-            }
-
-            .navbar-logo span {
-                font-size: 0.8rem;
+                margin-bottom: 1rem;
             }
 
             .nav-links {
-                flex-direction: row;
-                justify-content: center;
+                flex-direction: column;
                 width: 100%;
                 gap: 0.5rem;
             }
 
             .nav-links a {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.9rem;
+                text-align: center;
+            }
+
+            .show-sidebar-button {
+                margin: 0 0 1rem 0;
             }
         }
 
-        /* Add instruction text */
-        .instruction-text {
+        @media screen and (max-width: 480px) {
+            .landing-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .landing-section .social-links a {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .enter-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .about-section {
+                padding: 1.5rem;
+            }
+
+            .project-card img {
+                height: 150px;
+            }
+
+            .project-info {
+                padding: 1rem;
+            }
+        }
+
+        .go-home-button {
             position: fixed;
-            top: 80px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            background: rgba(15, 21, 29, 0.95);
-            color: #e2e8f0;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            z-index: 1000;
-            border: 1px solid #818cf8;
-            box-shadow: 0 0 15px rgba(129, 140, 248, 0.3);
-            animation: bounce 2s infinite;
-            text-align: center;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(45deg, #4a9eff, #7ab8ff);
+            color: var(--text-primary);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1002;
+            opacity: 0;
+            pointer-events: none;
         }
 
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            50% {
-                transform: translateX(-50%) translateY(-10px);
-            }
+        .go-home-button.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .go-home-button:hover {
+            transform: translate(-50%, -50%) translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 158, 255, 0.4);
+            background: linear-gradient(45deg, #7ab8ff, #4a9eff);
+        }
+
+        .watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.8rem;
+            font-family: 'Inter', sans-serif;
+            pointer-events: none;
+            z-index: 1000;
+            background: rgba(15, 41, 66, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(74, 158, 255, 0.2);
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="#" class="navbar-logo" onclick="showSections()">
-            <div class="logo-content">
-                <img src="https://i.postimg.cc/MKZKcFYP/9774847c-a933-4b75-a008-92dfaafe2971.jpg" alt="Mhamad Koussa">
-                <span>© 2025 Mhamad Koussa <br> IT Student/Enthusiast • Beginner Web Developer</span>
+    <div class="watermark">Made by Mhamad Koussa (rast0fx)</div>
+    <button class="show-sidebar-button" onclick="showSidebar()">☰ Show Menu</button>
+    <div class="sidebar">
+        <div class="profile">
+            <div>
+                <h4>LeaderWazowski</h4>
+                <h4>3D Artist & Modeler</h4>
             </div>
-        </a>
-        <div class="navbar-links">
-            <a href="#" class="navbar-link" onclick="openTab('about')">About Me</a>
-            <a href="#" class="navbar-link" onclick="openTab('education')">Education</a>
-            <a href="#" class="navbar-link" onclick="openTab('certificates')">Certificates</a>
-            <a href="#" class="navbar-link" onclick="openTab('rate')">Rate Us</a>
         </div>
-    </nav>
+        <ul class="nav-links">
+            <li><a href="#" onclick="showSection('landing'); return false;">Home</a></li>
+            <li><a href="#" onclick="showSection('about'); return false;">About Me</a></li>
+            <li><a href="#" onclick="showSection('projects'); return false;">Projects</a></li>
+            <li><a href="#" onclick="showSection('prices'); return false;">Prices</a></li>
+        </ul>
+    </div>
 
-    <div class="container">
-        <div id="about" class="content active">
-            <h2>About Me</h2>
-            <p>Hey there! I'm Mhamad Koussa, a 15-year-old IT student and web development enthusiast. I'm passionate about creating beautiful, functional websites and continuously expanding my knowledge in information technology.</p>
-            <p>I enjoy learning new programming languages and frameworks, solving problems, and building projects that challenge my skills.</p>
-            <div id="socials" class="content">
-              <h2>Connect With Me</h2>
-            </div>
-            <div class="social-links">
-                <a href="https://www.instagram.com/mk0uss4/" target="_blank" aria-label="Instagram">
-                    <i class="fab fa-instagram social-icon instagram"></i>
-                </a>
-                <a href="https://www.tiktok.com/@mk0uss4" target="_blank" aria-label="TikTok">
-                    <i class="fab fa-tiktok social-icon tiktok"></i>
-                </a>
-                <a href="https://discordapp.com/users/954061819952132106" target="_blank" aria-label="Discord">
-                    <i class="fab fa-discord social-icon discord"></i>
-                </a>
-                <a href="https://wa.me/96176077021" target="_blank" aria-label="WhatsApp">
-                    <i class="fab fa-whatsapp social-icon whatsapp"></i>
-                </a>
+    <div class="main-content">
+        <div id="landing" class="section <?php echo $section === 'landing' ? 'active' : ''; ?>">
+            <div class="landing-section">
+                <img src="https://i.postimg.cc/xCFbc5Fm/leader.png" alt="LeaderWazowski Logo" class="leader-logo">
+                <h1>LeaderWazowski</h1>
+                <h2>3D Artist & Modeler</h2>
+                <div class="social-links">
+                    <a href="https://www.roblox.com/users/5272410494/profile" target="_blank">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Roblox_player_icon_black.svg/1200px-Roblox_player_icon_black.svg.png" alt="Roblox">
+                        Roblox
+                    </a>
+                    <a href="https://discord.com/channels/@me/1278465508697444382" target="_blank">
+                        <img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6ca814282eca7172c6_icon_clyde_white_RGB.svg" alt="Discord">
+                        Discord
+                    </a>
+                </div>
+                <a href="#" class="enter-button" onclick="enterPortfolio(); return false;">Enter Portfolio</a>
             </div>
         </div>
-        
-        <div id="education" class="content">
-            <h2>Education Experience</h2>
-            <p>I'm currently studying IT at <a href="https://www.ciscollege.edu.lb/" target="_blank"> <font color="#0047AB"> CIS College (Barja Branch) </font> </a> where I'm building a strong foundation in computer science and information technology principles.</p>
-            <p>Additionally, I'm taking specialized courses at <a href="https://robomind-edu.com/" target="_blank"> <font color="#0047AB"> Robomind </font>  </a>, focusing on web development, programming, and digital skills that will help me advance in my tech career. (CSS, html, Java, mySQL, PHP)</p>
+
+        <div id="about" class="section <?php echo $section === 'about' ? 'active' : ''; ?>">
+            <h1>About Me</h1>
+            <div class="about-section">
+                <p>As a passionate 3D artist, I specialize in crafting high-quality models with attention to detail, accuracy, and realism. With experience in Blender and Roblox Studio, I focus on bringing creative visions to life—whether it's intricate hard-surface models, realistic props, or immersive environments.</p>
+                <div class="disclaimer">
+                    <p>Disclaimer: A lot of these models are from when I was a newer modeler. Many of these may not be the best currently, but I'm still working on my portfolio as we speak.</p>
+                </div>
+            </div>
         </div>
-        
-        <div id="projects" class="content">
-            <h2>Projects</h2>
-            <div class="project-gallery">
+
+        <div id="projects" class="section <?php echo $section === 'projects' ? 'active' : ''; ?>">
+            <h1>Projects</h1>
+            <div class="project-grid">
                 <div class="project-card">
-                    <h3 class="project-title">Portfolio Website</h3>
-                    <p class="project-description">A modern, responsive portfolio website showcasing my web development skills. Features include smooth animations, interactive UI elements, and a clean, professional design. Built with HTML, CSS, and JavaScript.</p>
+                    <img src="https://i.postimg.cc/DzPfk10V/cap.png" alt="Cap Model">
+                    <div class="project-info">
+                        <h3>Cap Model</h3>
+                        <p>A detailed cap model created in Blender</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://i.postimg.cc/tTrX7yF2/crown.png" alt="Crown Model">
+                    <div class="project-info">
+                        <h3>Crown Model</h3>
+                        <p>Detailed crown with geometric patterns</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://i.postimg.cc/TP624tRq/beret.png" alt="Beret Model">
+                    <div class="project-info">
+                        <h3>Beret Model</h3>
+                        <p>Stylish beret with realistic fabric details</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://i.postimg.cc/B6ZSqtPj/chest.png" alt="Chest Model">
+                    <div class="project-info">
+                        <h3>Chest Model</h3>
+                        <p>Detailed chest with realistic textures and details</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="prices" class="section <?php echo $section === 'prices' ? 'active' : ''; ?>">
+            <h1>Prices</h1>
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Description</th>
+                        <th>Price Range</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Simple Props</td>
+                        <td>Basic 3D models with minimal details</td>
+                        <td>100 - 300 Robux</td>
+                    </tr>
+                    <tr>
+                        <td>Detailed Props</td>
+                        <td>Complex models with high detail and textures</td>
+                        <td>300 - 1,000 Robux</td>
+                    </tr>
                     
-                    <a href="https://rast0fx.github.io/leaderportfolio/" class="view-project-btn" target="_blank">View Project</a>
-                    <div class="project-tags">
-                        <span class="project-tag">HTML</span>
-                        <span class="project-tag">CSS</span>
-                        <span class="project-tag">JavaScript</span>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <h3 class="project-title">Digital Clock</h3>
-                    <p class="project-description">A simple yet elegant digital clock showing time in 12-hour format with AM/PM indicator.</p>
-                    <a href="javascript:void(0)" class="view-project-btn" onclick="openClockProject()">View Project</a>
-                    <div class="project-tags">
-                        <span class="project-tag">HTML</span>
-                        <span class="project-tag">CSS</span>
-                        <span class="project-tag">JavaScript</span>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <h3 class="project-title">Stopwatch</h3>
-                    <p class="project-description">A functional stopwatch with start, stop, and reset functionality. Tracks time with precision.</p>
-                    <a href="javascript:void(0)" class="view-project-btn" onclick="openStopwatchProject()">View Project</a>
-                    <div class="project-tags">
-                        <span class="project-tag">HTML</span>
-                        <span class="project-tag">CSS</span>
-                        <span class="project-tag">JavaScript</span>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <h3 class="project-title">Mock Survey Form</h3>
-                    <p class="project-description">A simple Mock survey form with various input fields and options for users to provide feedback.</p>
-                    <a href="javascript:void(0)" class="view-project-btn" onclick="openSurveyFormProject()">View Project</a>
-                    <div class="project-tags">
-                        <span class="project-tag">HTML</span>
-                        <span class="project-tag">CSS</span>
-                    </div>
-                </div>
-            </div>
+                </tbody>
+            </table>
         </div>
-
-        <div id="certificates" class="content">
-            <h2>Certificates</h2>
-            <div class="certificate-gallery">
-                <img src="https://i.postimg.cc/VvBYfrHH/Whats-App-Image-2025-03-19-at-12-31-57-PM.jpg" alt="Certificate 1" class="certificate" onclick="window.open(this.src, '_blank')">
-            </div>
-        </div>
-
-        <div id="rate" class="content">
-            <h2>Rate Us</h2>
-            <form id="ratingForm" onsubmit="submitRating(event)" style="max-width: 500px; margin: 0 auto;">
-                <div style="margin-bottom: 20px;">
-                    <label for="name" style="display: block; margin-bottom: 8px;">Your Name:</label>
-                    <input type="text" id="name" name="name" required style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #818cf8; background: rgba(255, 255, 255, 0.1); color: #e2e8f0;">
-                </div>
-                <div style="margin-bottom: 20px;">
-                    <label for="email" style="display: block; margin-bottom: 8px;">Your Email:</label>
-                    <input type="email" id="email" name="email" required style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #818cf8; background: rgba(255, 255, 255, 0.1); color: #e2e8f0;">
-                </div>
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 8px;">Rating:</label>
-                    <div class="star-rating" style="display: flex; gap: 10px; justify-content: center; font-size: 2em;">
-                        <i class="fas fa-star" data-rating="1" style="color: #6c757d; cursor: pointer;"></i>
-                        <i class="fas fa-star" data-rating="2" style="color: #6c757d; cursor: pointer;"></i>
-                        <i class="fas fa-star" data-rating="3" style="color: #6c757d; cursor: pointer;"></i>
-                        <i class="fas fa-star" data-rating="4" style="color: #6c757d; cursor: pointer;"></i>
-                        <i class="fas fa-star" data-rating="5" style="color: #6c757d; cursor: pointer;"></i>
-                    </div>
-                    <input type="hidden" name="rating" id="selected-rating" required>
-                </div>
-                <div style="margin-bottom: 20px;">
-                    <label for="feedback" style="display: block; margin-bottom: 8px;">Feedback:</label>
-                    <textarea id="feedback" name="feedback" required style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #818cf8; background: rgba(255, 255, 255, 0.1); color: #e2e8f0; min-height: 100px;"></textarea>
-                </div>
-                <button type="submit" style="background: linear-gradient(45deg, #818cf8, #6366f1); color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; width: 100%;">Submit Rating</button>
-            </form>
-        </div>
-
-        <!-- Hidden clock HTML to be opened in new tab -->
-        <div id="clock-project-html" style="display: none;">
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-              <meta charset="utf-8">
-              <meta name="viewport" content="width=device-width">
-              <title>Digital Clock</title>
-              <style>
-                body {
-                  background-color: light blue;
-                  font-family: Arial, sans-serif;
-                }
-                #clock {
-                  background-color: #fbeaea;
-                  padding: 20px;
-                  border-radius: 25px;
-                  text-align: center;
-                }
-                #MyClockDisplay {
-                  border: 2px dashed #495563;
-                  padding: 10px;
-                  border-radius: 20px;
-                  position: absolute;
-                  top: 50%;
-                  left: 50%;
-                  transform: translateX(-50%) translateY(-50%);
-                  color: #495563;
-                  font-size: 60px;
-                  font-family: Orbitron;
-                  letter-spacing: 7px;
-                }
-                h1, h2 {
-                  text-align: center;
-                  color: #a399db;
-                  margin: 20px;
-                  font-family: 'Roboto', sans-serif;
-                  font-weight: 100;
-                  font-size: 70px;
-                  text-transform: uppercase;
-                }
-              </style>
-            </head>
-            <body>
-              <div id="clock">
-                <h1>Digital Clock</h1>
-                <h2>(12-Hour Pattern)</h2>
-                <div id="MyClockDisplay"></div>
-              </div> 
-              <script>
-                function showTime() {
-                  var date = new Date();
-                  var h = date.getHours(); // 0 - 23
-                  var m = date.getMinutes(); // 0 - 59
-                  var s = date.getSeconds(); // 0 - 59
-                  var session = "AM";
-                  if (h == 0) {
-                    h = 12;
-                  }
-                  if (h > 12) {
-                    h = h - 12;
-                    session = "PM";
-                  }
-                  h = (h < 10) ? "0" + h : h;
-                  m = (m < 10) ? "0" + m : m;
-                  s = (s < 10) ? "0" + s : s;
-                  var time = h + ":" + m + ":" + s + " " + session;
-                  document.getElementById("MyClockDisplay").innerText = time;
-                  setTimeout(showTime, 1000);
-                }
-                showTime();
-              </script>
-            </body>
-            </html>
-        </div>
-
-        <!-- Hidden stopwatch HTML to be opened in new tab -->
-        <div id="stopwatch-project-html" style="display: none;">
-            <!DOCTYPE html>
-            <html>
-            <head>
-              <meta charset="utf-8">
-              <meta name="viewport" content="width=device-width">
-              <title>Stopwatch</title>
-              <style>
-                body {
-                  background: rgb(18, 56, 56);
-                  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-                }
-                .wrapper {
-                  color: white;
-                  text-align: center;
-                  position: absolute;
-                  top: 20%;
-                  left: 25%;
-                }
-                h1 {
-                  font-family: 'Roboto', sans-serif;
-                  font-weight: 100;
-                  font-size: 54px;
-                  text-transform: uppercase;
-                }
-                #time {
-                  letter-spacing: 7px;
-                  font-size: 70px;
-                  font-weight: bold;
-                  margin: 0;
-                  margin-top: 24px;
-                  margin-bottom: 24px;
-                }
-                button {
-                  cursor: pointer;
-                  font-size: 16px;
-                  padding: 18px 10px;
-                  margin: 10px;
-                  width: 180px;
-                  background: rgb(22, 171, 230);
-                  color: white;
-                  border: solid 2px white;
-                  box-shadow: 5px 5px 5px rgb(180, 177, 177);
-                  border-radius: 5px;
-                }
-                button:hover {
-                  background: white;
-                  border: solid 2px rgb(22, 171, 230);
-                  color: skyblue;
-                }
-              </style>
-            </head>
-            <body>
-              <div class="wrapper">
-                <h1>Stopwatch</h1>
-                <h2 id="time">00:00:00</h2>
-                <button id="button-start">Start</button>
-                <button id="button-stop">Stop</button>
-                <button id="button-reset">Reset</button>
-              </div>
-              <script>
-                var milli_seconds = 0, seconds = 0, minutes = 0;
-                var h1 = document.getElementById('time')
-                start = document.getElementById('button-start'),
-                stop = document.getElementById('button-stop'),
-                clear = document.getElementById('button-reset');
-                var interval = 1;
-                function count() {
-                  interval = 1;
-                  milli_seconds += interval;
-                  if (milli_seconds >= 100) {
-                    milli_seconds = 0;
-                    seconds += interval;
-                  }
-                  if (seconds >= 60) {
-                    seconds = 0;
-                    minutes += interval;
-                  }
-                  h1.textContent = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds ? (seconds > 9 ? seconds : "0" + seconds) : "00") + ":" + (milli_seconds > 9 ? milli_seconds : "0" + milli_seconds);
-                  timer();
-                }
-                function timer() {
-                  t = setTimeout(count, 10);
-                }
-                /* Start button */
-                start.onclick = count;
-                /* Stop button */
-                stop.onclick = function() {
-                  clearTimeout(t);
-                }
-                /* Clear button */
-                clear.onclick = function() {
-                  h1.textContent = "00:00:00";
-                  seconds = 0;
-                  minutes = 0;
-                  milli_seconds = 0;
-                  interval = 0;
-                }
-              </script>
-            </body>
-            </html>
-        </div>
-
-        <div id="SurveyForm-project-html" style="display: none;">
-            <!DOCTYPE html>
-            <html>
-            <head>
-              <meta charset="utf-8">
-              <meta name="viewport" content="width=device-width">
-              <title>Mock Survey form</title>
-              <style>
-                @import url('https://fonts.googleapis.com/css?family=Poppins:200i,400&display=swap');
-            
-                :root {
-                  --color-white: #f3f3f3;
-                  --color-darkblue: #1b1b32;
-                  --color-darkblue-alpha: rgba(27, 27, 50, 0.8);
-                  --color-green: #37af65;
-                }
-            
-                *,
-                *::before,
-                *::after {
-                  box-sizing: border-box;
-                }
-            
-                body {
-                  font-family: 'Poppins', sans-serif;
-                  font-size: 1rem;
-                  font-weight: 400;
-                  line-height: 1.4;
-                  color: var(--color-white);
-                  margin: 0;
-                }
-            
-                /* mobile friendly alternative to using background-attachment: fixed */
-                body::before {
-                  content: '';
-                  position: fixed;
-                  top: 0;
-                  left: 0;
-                  height: 100%;
-                  width: 100%;
-                  z-index: -1;
-                  background: var(--color-darkblue);
-                  background-image: linear-gradient(
-                      115deg,
-                      rgba(58, 58, 158, 0.8),
-                      rgba(136, 136, 206, 0.7)
-                    ),
-                    url("https://i.postimg.cc/JhkGc7h7/cool-background.png");
-                  background-size: cover;
-                  background-repeat: no-repeat;
-                  background-position: center;
-                }
-            
-                h1 {
-                  font-weight: 400;
-                  line-height: 1.2;
-                }
-            
-                p {
-                  font-size: 1.125rem;
-                }
-            
-                h1,
-                p {
-                  margin-top: 0;
-                  margin-bottom: 0.5rem;
-                }
-            
-                label {
-                  display: flex;
-                  align-items: center;
-                  font-size: 1.125rem;
-                  margin-bottom: 0.5rem;
-                }
-            
-                input,
-                button,
-                select,
-                textarea {
-                  margin: 0;
-                  font-family: inherit;
-                  font-size: inherit;
-                  line-height: inherit;
-                }
-            
-                button {
-                  border: none;
-                }
-            
-                .container {
-                  width: 100%;
-                  margin: 3.125rem auto 0 auto;
-                }
-            
-                @media (min-width: 576px) {
-                  .container {
-                    max-width: 540px;
-                  }
-                }
-            
-                @media (min-width: 768px) {
-                  .container {
-                    max-width: 720px;
-                  }
-                }
-            
-                .header {
-                  padding: 0 0.625rem;
-                  margin-bottom: 1.875rem;
-                }
-            
-                .description {
-                  font-style: italic;
-                  font-weight: 200;
-                  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
-                }
-            
-                .clue {
-                  margin-left: 0.25rem;
-                  font-size: 0.9rem;
-                  color: #e4e4e4;
-                }
-            
-                .text-center {
-                  text-align: center;
-                }
-            
-                /* form */
-                form {
-                  background: var(--color-darkblue-alpha);
-                  padding: 2.5rem 0.625rem;
-                  border-radius: 0.25rem;
-                }
-            
-                @media (min-width: 480px) {
-                  form {
-                    padding: 2.5rem;
-                  }
-                }
-            
-                .form-group {
-                  margin: 0 auto 1.25rem auto;
-                  padding: 0.25rem;
-                }
-            
-                .form-control {
-                  display: block;
-                  width: 100%;
-                  height: 2.375rem;
-                  padding: 0.375rem 0.75rem;
-                  color: #495057;
-                  background-color: #fff;
-                  background-clip: padding-box;
-                  border: 1px solid #ced4da;
-                  border-radius: 0.25rem;
-                  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-                }
-            
-                .form-control:focus {
-                  border-color: #80bdff;
-                  outline: 0;
-                  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-                }
-            
-                .input-radio,
-                .input-checkbox {
-                  display: inline-block;
-                  margin-right: 0.625rem;
-                  min-height: 1.25rem;
-                  min-width: 1.25rem;
-                }
-            
-                .input-textarea {
-                  min-height: 120px;
-                  width: 100%;
-                  padding: 0.625rem;
-                  resize: vertical;
-                }
-            
-                .submit-button {
-                  display: block;
-                  width: 100%;
-                  padding: 0.75rem;
-                  background: var(--color-green);
-                  color: inherit;
-                  border-radius: 2px;
-                  cursor: pointer;
-                }
-              </style>
-            </head>
-            
-            <body>
-              <div class="container">
-                <header class="header">
-                  <h1 id="title" class="text-center">Mock Survey Form</h1>
-                  <p id="description" class="description text-center">
-                    Thank you for taking the time to help us improve the platform
-                  </p>
-                </header>
-                <form id="survey-form">
-                  <div class="form-group">
-                    <label id="name-label" for="name">Name</label>
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      class="form-control"
-                      placeholder="Enter your name"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label id="email-label" for="email">Email</label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      class="form-control"
-                      placeholder="Enter your Email"
-                      required
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label id="number-label" for="number"
-                      >Age<span class="clue">(optional)</span></label
-                    >
-                    <input
-                      type="number"
-                      name="age"
-                      id="number"
-                      min="10"
-                      max="99"
-                      class="form-control"
-                      placeholder="Age"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <p>Which option best describes your current role?</p>
-                    <select id="dropdown" name="role" class="form-control" required>
-                      <option disabled selected value>Select current role</option>
-                      <option value="student">Student</option>
-                      <option value="job">Full Time Job</option>
-                      <option value="learner">Full Time Learner</option>
-                      <option value="preferNo">Prefer not to say</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
-        
-                  <div class="form-group">
-                    <p>Would you recommend this survey to a friend?</p>
-                    <label>
-                      <input
-                        name="user-recommend"
-                        value="definitely"
-                        type="radio"
-                        class="input-radio"
-                        checked
-                      />Definitely</label
-                    >
-                    <label>
-                      <input
-                        name="user-recommend"
-                        value="maybe"
-                        type="radio"
-                        class="input-radio"
-                      />Maybe</label
-                    >
-        
-                    <label
-                      ><input
-                        name="user-recommend"
-                        value="not-sure"
-                        type="radio"
-                        class="input-radio"
-                      />Not sure</label
-                    >
-                  </div>
-        
-                  <div class="form-group">
-                    <p>
-                      What is your favorite feature of platform?
-                    </p>
-                    <select id="most-like" name="mostLike" class="form-control" required>
-                      <option disabled selected value>Select an option</option>
-                      <option value="challenges">Challenges</option>
-                      <option value="projects">Projects</option>
-                      <option value="community">Community</option>
-                      <option value="openSource">Open Source</option>
-                    </select>
-                  </div>
-        
-                  <div class="form-group">
-                    <p>
-                      What would you like to see improved?
-                      <span class="clue">(Check all that apply)</span>
-                    </p>
-        
-                    <label
-                      ><input
-                        name="prefer"
-                        value="front-end-projects"
-                        type="checkbox"
-                        class="input-checkbox"
-                      />Front-end Projects</label
-                    >
-                    <label>
-                      <input
-                        name="prefer"
-                        value="back-end-projects"
-                        type="checkbox"
-                        class="input-checkbox"
-                      />Back-end Projects</label
-                    >
-                    <label
-                      ><input
-                        name="prefer"
-                        value="data-visualization"
-                        type="checkbox"
-                        class="input-checkbox"
-                      />Data Visualization</label
-                    >
-                    <label
-                      ><input
-                        name="prefer"
-                        value="challenges"
-                        type="checkbox"
-                        class="input-checkbox"
-                      />Challenges</label
-                    >
-                    <label
-                      ><input
-                        name="prefer"
-                        value="open-source-community"
-                        type="checkbox"
-                        class="input-checkbox"
-                      />Open Source Community</label
-                    >
-                    <label
-                      ><input
-                        name="prefer"
-                        value="gitter-help-rooms"
-                        type="checkbox"
-                        class="input-checkbox"
-                      />Gitter help rooms</label
-                    >
-                    <label
-                      ><input
-                        name="prefer"
-                        value="videos"
-                        type="checkbox"
-                        class="input-checkbox"
-                      />Videos</label
-                    >
-                    <label
-                      ><input
-                        name="prefer"
-                        value="city-meetups"
-                        type="checkbox"
-                        class="input-checkbox"
-                      />City Meetups</label
-                    >
-                    <label
-                      ><input
-                        name="prefer"
-                        value="wiki"
-                        type="checkbox"
-                        class="input-checkbox"
-                      />Wiki</label
-                    >
-                    <label
-                      ><input
-                        name="prefer"
-                        value="forum"
-                        type="checkbox"
-                        class="input-checkbox"
-                      />Forum</label
-                    >
-                    <label
-                      ><input
-                        name="prefer"
-                        value="additional-courses"
-                        type="checkbox"
-                        class="input-checkbox"
-                      />Additional Courses</label
-                    >
-                  </div>
-        
-                  <div class="form-group">
-                    <p>Any comments or suggestions?</p>
-                    <textarea
-                      id="comments"
-                      class="input-textarea"
-                      name="comment"
-                      placeholder="Enter your comment here..."
-                    ></textarea>
-                  </div>
-        
-                  <div class="form-group">
-                    <button type="submit" id="submit" class="submit-button">
-                      Submit
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </body>
-            </html>
-        </div>
-
-        <!-- Hidden portfolio HTML to be opened in new tab -->
-        <div id="portfolio-project-html" style="display: none;">
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>LeaderWazowski - 3D Artist Portfolio</title>
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-                <style>
-                    :root {
-                        --primary-bg: #0a1929;
-                        --secondary-bg: #0f2942;
-                        --accent-color: #4a9eff;
-                        --text-primary: #e2e8f0;
-                        --text-secondary: #94a3b8;
-                    }
-
-                    * {
-                        margin: 0;
-                        padding: 0;
-                        box-sizing: border-box;
-                    }
-
-                    body {
-                        font-family: 'Inter', sans-serif;
-                        background-color: var(--primary-bg);
-                        color: var(--text-primary);
-                        line-height: 1.6;
-                        min-height: 100vh;
-                        display: flex;
-                        background-image: url('https://i.postimg.cc/15XJCYZk/wp10231012-kakashi-blue-wallpapers.png');
-                        background-size: cover;
-                        background-position: center;
-                        background-attachment: fixed;
-                        background-repeat: no-repeat;
-                    }
-
-                    .sidebar {
-                        width: 100%;
-                        background-color: rgba(15, 41, 66, 0.95);
-                        padding: 1rem;
-                        position: fixed;
-                        top: 0;
-                        left: 0;
-                        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-                        transition: transform 0.3s ease;
-                        z-index: 1000;
-                        backdrop-filter: blur(10px);
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                    }
-
-                    .sidebar.hidden {
-                        transform: translateY(-100%);
-                    }
-
-                    .profile {
-                        display: flex;
-                        align-items: center;
-                        gap: 1.5rem;
-                        margin-bottom: 0;
-                        padding: 0.8rem;
-                        background: rgba(255, 255, 255, 0.08);
-                        border-radius: 15px;
-                        border: 1px solid rgba(74, 158, 255, 0.3);
-                    }
-
-                    .profile img {
-                        width: 80px;
-                        height: 80px;
-                        border-radius: 50%;
-                        border: 4px solid var(--accent-color);
-                        margin-bottom: 0;
-                        transition: all 0.3s ease;
-                        box-shadow: 0 0 50px rgba(74, 158, 255, 1);
-                        background: rgba(255, 255, 255, 0.35);
-                        backdrop-filter: blur(8px);
-                        padding: 5px;
-                    }
-
-                    .profile img:hover {
-                        transform: none;
-                        box-shadow: 0 0 60px rgba(74, 158, 255, 1);
-                        border-color: #7ab8ff;
-                        background: rgba(255, 255, 255, 0.4);
-                    }
-
-                    .profile h2 {
-                        color: var(--text-primary);
-                        margin-bottom: 0.2rem;
-                        font-size: 1.8rem;
-                        text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
-                    }
-
-                    .profile h3 {
-                        color: var(--text-secondary);
-                        font-size: 1.2rem;
-                        margin-bottom: 0;
-                        text-shadow: 0 0 8px rgba(74, 158, 255, 0.3);
-                    }
-
-                    .nav-links {
-                        list-style: none;
-                        display: flex;
-                        gap: 1rem;
-                        margin: 0;
-                        padding: 0;
-                        align-items: center;
-                    }
-
-                    .nav-links a {
-                        display: block;
-                        padding: 0.8rem 1.5rem;
-                        color: var(--text-primary);
-                        text-decoration: none;
-                        transition: all 0.3s ease;
-                        border-radius: 8px;
-                        margin-bottom: 0;
-                    }
-
-                    .nav-links a:hover,
-                    .nav-links a.active {
-                        background-color: var(--accent-color);
-                        transform: translateY(-2px);
-                    }
-
-                    .main-content {
-                        margin-top: 0;
-                        padding: 2rem;
-                        width: 100%;
-                        transition: margin-top 0.3s ease;
-                    }
-
-                    .main-content.expanded {
-                        margin-top: 0;
-                    }
-
-                    .section {
-                        display: none;
-                        animation: fadeIn 0.5s ease-in-out;
-                    }
-
-                    .section.active {
-                        display: block;
-                    }
-
-                    @keyframes fadeIn {
-                        from { opacity: 0; transform: translateY(20px); }
-                        to { opacity: 1; transform: translateY(0); }
-                    }
-
-                    h1 {
-                        color: var(--accent-color);
-                        margin-bottom: 1.5rem;
-                        font-size: 2.5rem;
-                    }
-
-                    .about-section {
-                        background: rgba(15, 41, 66, 0.8);
-                        border-radius: 12px;
-                        padding: 2rem;
-                        margin-top: 1rem;
-                        border: 1px solid rgba(74, 158, 255, 0.2);
-                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-                        backdrop-filter: blur(10px);
-                    }
-
-                    .about-section p {
-                        font-size: 1.1rem;
-                        line-height: 1.8;
-                        margin-bottom: 1rem;
-                    }
-
-                    .about-section .disclaimer {
-                        font-style: italic;
-                        color: var(--text-secondary);
-                        font-size: 0.9rem;
-                        padding: 1rem;
-                        border-left: 3px solid var(--accent-color);
-                        margin-top: 1.5rem;
-                        background: rgba(74, 158, 255, 0.1);
-                        border-radius: 0 8px 8px 0;
-                    }
-
-                    .project-grid {
-                        display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                        gap: 2rem;
-                        margin-top: 2rem;
-                    }
-
-                    .project-card {
-                        background-color: rgba(15, 41, 66, 0.8);
-                        border-radius: 12px;
-                        overflow: hidden;
-                        transition: transform 0.3s ease;
-                        backdrop-filter: blur(10px);
-                        border: 1px solid rgba(74, 158, 255, 0.2);
-                    }
-
-                    .project-card:hover {
-                        transform: translateY(-5px);
-                    }
-
-                    .project-card img {
-                        width: 100%;
-                        height: 200px;
-                        object-fit: cover;
-                    }
-
-                    .project-info {
-                        padding: 1.5rem;
-                    }
-
-                    .project-info h3 {
-                        color: var(--accent-color);
-                        margin-bottom: 0.5rem;
-                    }
-
-                    .price-table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin-top: 2rem;
-                        background: rgba(15, 41, 66, 0.8);
-                        backdrop-filter: blur(10px);
-                        border-radius: 12px;
-                        overflow: hidden;
-                    }
-
-                    .price-table th,
-                    .price-table td {
-                        padding: 1rem;
-                        text-align: left;
-                        border-bottom: 1px solid rgba(74, 158, 255, 0.2);
-                    }
-
-                    .price-table th {
-                        background-color: rgba(74, 158, 255, 0.2);
-                        color: var(--accent-color);
-                    }
-
-                    .price-table tr:hover {
-                        background-color: rgba(74, 158, 255, 0.1);
-                    }
-
-                    .landing-section {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
-                        min-height: 100vh;
-                        text-align: center;
-                        padding: 2rem;
-                        background: rgba(15, 41, 66, 0.7);
-                        backdrop-filter: blur(10px);
-                        border-radius: 20px;
-                        margin: 2rem;
-                        border: 1px solid rgba(74, 158, 255, 0.2);
-                        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-                    }
-
-                    .landing-section h1 {
-                        font-size: 4rem;
-                        margin-bottom: 2rem;
-                        color: var(--accent-color);
-                        text-shadow: 0 0 20px rgba(74, 158, 255, 0.5);
-                        background: linear-gradient(45deg, #4a9eff, #7ab8ff);
-                        -webkit-background-clip: text;
-                        -webkit-text-fill-color: transparent;
-                        animation: glow 2s ease-in-out infinite alternate;
-                    }
-
-                    .landing-section h2 {
-                        font-size: 2rem;
-                        color: var(--text-primary);
-                        margin-bottom: 2rem;
-                        text-shadow: 0 0 10px rgba(74, 158, 255, 0.3);
-                    }
-
-                    @keyframes glow {
-                        from {
-                            text-shadow: 0 0 20px rgba(74, 158, 255, 0.5);
-                        }
-                        to {
-                            text-shadow: 0 0 30px rgba(74, 158, 255, 0.8);
-                        }
-                    }
-
-                    .landing-section .leader-logo {
-                        width: 220px;
-                        height: 220px;
-                        border-radius: 50%;
-                        border: 6px solid var(--accent-color);
-                        margin-bottom: 2.5rem;
-                        box-shadow: 0 0 80px rgba(74, 158, 255, 1);
-                        background: rgba(255, 255, 255, 0.4);
-                        backdrop-filter: blur(8px);
-                        padding: 8px;
-                        animation: float 3s ease-in-out infinite;
-                    }
-
-                    .landing-section .social-links {
-                        margin-top: 2.5rem;
-                        display: flex;
-                        gap: 2rem;
-                        align-items: center;
-                    }
-
-                    .landing-section .social-links a {
-                        padding: 1.2rem 2.5rem;
-                        font-size: 1.3rem;
-                        background: rgba(74, 158, 255, 0.25);
-                        border: 2px solid rgba(74, 158, 255, 0.4);
-                        backdrop-filter: blur(8px);
-                        transition: all 0.3s ease;
-                        display: flex;
-                        align-items: center;
-                        gap: 1rem;
-                        border-radius: 15px;
-                        color: var(--text-primary);
-                        text-decoration: none;
-                        box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
-                    }
-
-                    .landing-section .social-links a:hover {
-                        transform: translateY(-5px);
-                        background: rgba(74, 158, 255, 0.35);
-                        border-color: rgba(74, 158, 255, 0.6);
-                        box-shadow: 0 8px 25px rgba(74, 158, 255, 0.5);
-                    }
-
-                    .landing-section .social-links img {
-                        width: 32px;
-                        height: 32px;
-                        object-fit: contain;
-                        filter: brightness(0) invert(1);
-                        transition: all 0.3s ease;
-                    }
-
-                    .landing-section .social-links a:hover img {
-                        transform: scale(1.1);
-                    }
-
-                    @keyframes float {
-                        0% {
-                            transform: translateY(0px);
-                            box-shadow: 0 0 80px rgba(74, 158, 255, 0.9);
-                        }
-                        50% {
-                            transform: translateY(-15px);
-                            box-shadow: 0 0 100px rgba(74, 158, 255, 1);
-                        }
-                        100% {
-                            transform: translateY(0px);
-                            box-shadow: 0 0 80px rgba(74, 158, 255, 0.9);
-                        }
-                    }
-
-                    .enter-button {
-                        margin-top: 2rem;
-                        padding: 1.2rem 2.5rem;
-                        background: linear-gradient(45deg, #4a9eff, #7ab8ff);
-                        color: var(--text-primary);
-                        text-decoration: none;
-                        border-radius: 12px;
-                        font-size: 1.3rem;
-                        font-weight: bold;
-                        transition: all 0.3s ease;
-                        border: none;
-                        box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
-                    }
-
-                    .enter-button:hover {
-                        transform: translateY(-3px);
-                        box-shadow: 0 8px 25px rgba(74, 158, 255, 0.4);
-                        background: linear-gradient(45deg, #7ab8ff, #4a9eff);
-                    }
-
-                    .show-sidebar-button {
-                        position: fixed;
-                        top: 1rem;
-                        right: 1rem;
-                        background: var(--accent-color);
-                        color: var(--text-primary);
-                        border: none;
-                        padding: 0.5rem 1rem;
-                        border-radius: 8px;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                        font-size: 1rem;
-                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-                        z-index: 1001;
-                        opacity: 0;
-                        pointer-events: none;
-                    }
-
-                    .show-sidebar-button.visible {
-                        opacity: 1;
-                        pointer-events: auto;
-                    }
-
-                    .show-sidebar-button:hover {
-                        background: #7ab8ff;
-                        transform: translateY(-2px);
-                    }
-
-                    @media screen and (max-width: 768px) {
-                        .sidebar {
-                            flex-direction: column;
-                            padding: 1rem;
-                        }
-
-                        .profile {
-                            width: 100%;
-                            justify-content: center;
-                            margin-bottom: 1rem;
-                        }
-
-                        .nav-links {
-                            flex-direction: column;
-                            width: 100%;
-                            gap: 0.5rem;
-                        }
-
-                        .nav-links a {
-                            text-align: center;
-                        }
-
-                        .show-sidebar-button {
-                            margin: 0 0 1rem 0;
-                        }
-                    }
-
-                    @media screen and (max-width: 480px) {
-                        .landing-section h1 {
-                            font-size: 2.5rem;
-                        }
-
-                        .landing-section .social-links a {
-                            padding: 0.8rem 1.5rem;
-                            font-size: 1rem;
-                        }
-
-                        .enter-button {
-                            padding: 0.8rem 1.5rem;
-                            font-size: 1rem;
-                        }
-
-                        .about-section {
-                            padding: 1.5rem;
-                        }
-
-                        .project-card img {
-                            height: 150px;
-                        }
-
-                        .project-info {
-                            padding: 1rem;
-                        }
-                    }
-
-                    .go-home-button {
-                        position: fixed;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        background: linear-gradient(45deg, #4a9eff, #7ab8ff);
-                        color: var(--text-primary);
-                        padding: 1rem 2rem;
-                        border-radius: 12px;
-                        font-size: 1.2rem;
-                        font-weight: bold;
-                        cursor: pointer;
-                        border: none;
-                        box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
-                        transition: all 0.3s ease;
-                        z-index: 1002;
-                        opacity: 0;
-                        pointer-events: none;
-                    }
-
-                    .go-home-button.visible {
-                        opacity: 1;
-                        pointer-events: auto;
-                    }
-
-                    .go-home-button:hover {
-                        transform: translate(-50%, -50%) translateY(-3px);
-                        box-shadow: 0 8px 25px rgba(74, 158, 255, 0.4);
-                        background: linear-gradient(45deg, #7ab8ff, #4a9eff);
-                    }
-                </style>
-            </head>
-            <body>
-                <button class="show-sidebar-button" onclick="showSidebar()">☰ Show Menu</button>
-                <div class="sidebar">
-                    <div class="profile">
-                        <div>
-                            <h4>LeaderWazowski</h4>
-                            <h4>3D Artist & Modeler</h4>
-                        </div>
-                    </div>
-                    <ul class="nav-links">
-                        <li><a href="#" onclick="showSection('landing'); return false;">Home</a></li>
-                        <li><a href="#" onclick="showSection('about'); return false;">About Me</a></li>
-                        <li><a href="#" onclick="showSection('projects'); return false;">Projects</a></li>
-                        <li><a href="#" onclick="showSection('prices'); return false;">Prices</a></li>
-                    </ul>
-                </div>
-
-                <div class="main-content">
-                    <div id="landing" class="section active">
-                        <div class="landing-section">
-                            <img src="https://i.postimg.cc/xCFbc5Fm/leader.png" alt="LeaderWazowski Logo" class="leader-logo">
-                            <h1>LeaderWazowski</h1>
-                            <h2>3D Artist & Modeler</h2>
-                            <div class="social-links">
-                                <a href="https://www.roblox.com/users/5272410494/profile" target="_blank">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Roblox_player_icon_black.svg/1200px-Roblox_player_icon_black.svg.png" alt="Roblox">
-                                    Roblox
-                                </a>
-                                <a href="https://discord.com/channels/@me/1278465508697444382" target="_blank">
-                                    <img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6ca814282eca7172c6_icon_clyde_white_RGB.svg" alt="Discord">
-                                    Discord
-                                </a>
-                            </div>
-                            <a href="#" class="enter-button" onclick="enterPortfolio(); return false;">Enter Portfolio</a>
-                        </div>
-                    </div>
-
-                    <div id="about" class="section">
-                        <h1>About Me</h1>
-                        <div class="about-section">
-                            <p>As a passionate 3D artist, I specialize in crafting high-quality models with attention to detail, accuracy, and realism. With experience in Blender and Roblox Studio, I focus on bringing creative visions to life—whether it's intricate hard-surface models, realistic props, or immersive environments.</p>
-                            <div class="disclaimer">
-                                <p>Disclaimer: A lot of these models are from when I was a newer modeler. Many of these may not be the best currently, but I'm still working on my portfolio as we speak.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="projects" class="section <?php echo $section === 'projects' ? 'active' : ''; ?>">
-                        <h1>Projects</h1>
-                        <div class="project-grid">
-                            <div class="project-card">
-                                <img src="https://i.postimg.cc/DzPfk10V/cap.png" alt="Cap Model">
-                                <div class="project-info">
-                                    <h3>Cap Model</h3>
-                                    <p>A detailed cap model created in Blender</p>
-                                </div>
-                            </div>
-                            <div class="project-card">
-                                <img src="https://i.postimg.cc/tTrX7yF2/crown.png" alt="Crown Model">
-                                <div class="project-info">
-                                    <h3>Crown Model</h3>
-                                    <p>Detailed crown with geometric patterns</p>
-                                </div>
-                            </div>
-                            <div class="project-card">
-                                <img src="https://i.postimg.cc/TP624tRq/beret.png" alt="Beret Model">
-                                <div class="project-info">
-                                    <h3>Beret Model</h3>
-                                    <p>Stylish beret with realistic fabric details</p>
-                                </div>
-                            </div>
-                            <div class="project-card">
-                                <img src="https://i.postimg.cc/B6ZSqtPj/chest.png" alt="Chest Model">
-                                <div class="project-info">
-                                    <h3>Chest Model</h3>
-                                    <p>Detailed chest with realistic textures and details</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="prices" class="section">
-                        <h1>Prices</h1>
-                        <table class="price-table">
-                            <thead>
-                                <tr>
-                                    <th>Service</th>
-                                    <th>Description</th>
-                                    <th>Price Range</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Simple Props</td>
-                                    <td>Basic 3D models with minimal details</td>
-                                    <td>100 - 300 Robux</td>
-                                </tr>
-                                <tr>
-                                    <td>Detailed Props</td>
-                                    <td>Complex models with high detail and textures</td>
-                                    <td>300 - 1,000 Robux</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <script>
-                    function enterPortfolio() {
-                        showSection('about');
-                        
-                        const sidebar = document.querySelector('.sidebar');
-                        const mainContent = document.querySelector('.main-content');
-                        const showButton = document.querySelector('.show-sidebar-button');
-                        
-                        sidebar.classList.remove('hidden');
-                        mainContent.classList.remove('expanded');
-                        showButton.classList.remove('visible');
-                        
-                        document.querySelectorAll('.nav-links a').forEach(link => {
-                            link.classList.remove('active');
-                            if (link.textContent === 'About Me') {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-
-                    function showSection(sectionId) {
-                        history.pushState({ section: sectionId }, '', '?section=' + sectionId);
-                        
-                        document.querySelectorAll('.section').forEach(section => {
-                            section.classList.remove('active');
-                        });
-                        
-                        const selectedSection = document.getElementById(sectionId);
-                        if (selectedSection) {
-                            selectedSection.classList.add('active');
-                        }
-                        
-                        document.querySelectorAll('.nav-links a').forEach(link => {
-                            link.classList.remove('active');
-                            const linkText = link.textContent.toLowerCase();
-                            if ((linkText === 'home' && sectionId === 'landing') ||
-                                (linkText === 'about me' && sectionId === 'about') ||
-                                (linkText === 'projects' && sectionId === 'projects') ||
-                                (linkText === 'prices' && sectionId === 'prices')) {
-                                link.classList.add('active');
-                            }
-                        });
-
-                        const sidebar = document.querySelector('.sidebar');
-                        const mainContent = document.querySelector('.main-content');
-                        const showButton = document.querySelector('.show-sidebar-button');
-
-                        if (sectionId === 'landing') {
-                            sidebar.classList.add('hidden');
-                            mainContent.classList.add('expanded');
-                            showButton.classList.remove('visible');
-                        } else {
-                            sidebar.classList.remove('hidden');
-                            mainContent.classList.remove('expanded');
-                            showButton.classList.remove('visible');
-                        }
-                    }
-
-                    function showSidebar() {
-                        const sidebar = document.querySelector('.sidebar');
-                        const mainContent = document.querySelector('.main-content');
-                        const showButton = document.querySelector('.show-sidebar-button');
-                        
-                        sidebar.classList.remove('hidden');
-                        mainContent.classList.remove('expanded');
-                        showButton.classList.remove('visible');
-                    }
-
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const sidebar = document.querySelector('.sidebar');
-                        const mainContent = document.querySelector('.main-content');
-                        const showButton = document.querySelector('.show-sidebar-button');
-
-                        sidebar.classList.add('hidden');
-                        mainContent.classList.add('expanded');
-                        showButton.classList.remove('visible');
-                        document.getElementById('landing').classList.add('active');
-
-                        window.addEventListener('popstate', function(event) {
-                            if (event.state && event.state.section) {
-                                showSection(event.state.section);
-                            } else {
-                                showSection('landing');
-                            }
-                        });
-                    });
-                </script>
-            </body>
-            </html>
-        </div>
+    </div>
 
     <script>
-        function openTab(tabName) {
-            // Hide all content sections
-            let contents = document.getElementsByClassName("content");
-            for (let content of contents) {
-                content.classList.remove("active");
-            }
+        function enterPortfolio() {
+            // Navigate to About section
+            showSection('about');
             
-            // Show selected content section
-            document.getElementById(tabName).classList.add("active");
+            // Show the top bar and enable scrolling
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const showButton = document.querySelector('.show-sidebar-button');
+            const body = document.body;
             
-            // Update navbar links active state
-            let navLinks = document.getElementsByClassName("navbar-link");
-            for (let link of navLinks) {
-                link.classList.remove("active");
-                if (link.getAttribute("onclick").includes(`'${tabName}'`)) {
-                    link.classList.add("active");
+            sidebar.classList.remove('hidden');
+            mainContent.classList.remove('expanded');
+            showButton.classList.remove('visible');
+            body.classList.add('scrollable');
+            
+            // Highlight the About Me link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.textContent === 'About Me') {
+                    link.classList.add('active');
                 }
+            });
+        }
+
+        function showSection(sectionId) {
+            // Store the section in browser history without refreshing
+            history.pushState({ section: sectionId }, '', '?section=' + sectionId);
+            
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show the selected section
+            const selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.classList.add('active');
+            }
+            
+            // Update navigation link active states
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                const linkText = link.textContent.toLowerCase();
+                if ((linkText === 'home' && sectionId === 'landing') ||
+                    (linkText === 'about me' && sectionId === 'about') ||
+                    (linkText === 'projects' && sectionId === 'projects') ||
+                    (linkText === 'prices' && sectionId === 'prices')) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Handle sidebar visibility and scrolling
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const showButton = document.querySelector('.show-sidebar-button');
+            const body = document.body;
+
+            if (sectionId === 'landing') {
+                sidebar.classList.add('hidden');
+                mainContent.classList.add('expanded');
+                showButton.classList.remove('visible');
+                body.classList.remove('scrollable');
+            } else {
+                sidebar.classList.remove('hidden');
+                mainContent.classList.remove('expanded');
+                showButton.classList.remove('visible');
+                body.classList.add('scrollable');
             }
         }
 
-        // Show instruction text when page loads
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("about").classList.add("active");
-        });
+        function showSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const showButton = document.querySelector('.show-sidebar-button');
+            
+            sidebar.classList.remove('hidden');
+            mainContent.classList.remove('expanded');
+            showButton.classList.remove('visible');
+        }
 
-        function showSections() {
-            openTab('about');
-            openTab('education');
-            openTab('projects');
-        }
-        
-        // Function to open clock project in new tab
-        function openClockProject() {
-            const clockHTML = document.getElementById('clock-project-html').innerHTML;
-            const newTab = window.open('', '_blank');
-            newTab.document.write(clockHTML);
-            newTab.document.close();
-        }
-        
-        // // Function to open stopwatch project in new tab
-        function openStopwatchProject() {
-            const stopwatchHTML = document.getElementById('stopwatch-project-html').innerHTML;
-            const newTab = window.open('', '_blank');
-            newTab.document.write(stopwatchHTML);
-            newTab.document.close();
-        }
-        
-        // Function to open survey form project in new tab
-        function openSurveyFormProject() {
-            const surveyFormHTML = document.getElementById('SurveyForm-project-html').innerHTML;
-            const newTab = window.open('', '_blank');
-            newTab.document.write(surveyFormHTML);
-            newTab.document.close();
-        }
-        
-        // Star rating functionality
+        // Initialize sidebar state and handle browser back/forward
         document.addEventListener('DOMContentLoaded', function() {
-            const stars = document.querySelectorAll('.star-rating .fa-star');
-            const ratingInput = document.getElementById('selected-rating');
+            // Always start with landing section
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const showButton = document.querySelector('.show-sidebar-button');
 
-            stars.forEach(star => {
-                // Mouse events
-                star.addEventListener('mouseover', function() {
-                    const rating = this.getAttribute('data-rating');
-                    highlightStars(rating);
-                });
+            sidebar.classList.add('hidden');
+            mainContent.classList.add('expanded');
+            showButton.classList.remove('visible');
+            document.getElementById('landing').classList.add('active');
 
-                star.addEventListener('mouseout', function() {
-                    const selectedRating = ratingInput.value;
-                    highlightStars(selectedRating);
-                });
-
-                // Touch events
-                star.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
-                    const rating = this.getAttribute('data-rating');
-                    ratingInput.value = rating;
-                    highlightStars(rating);
-                });
-
-                star.addEventListener('click', function() {
-                    const rating = this.getAttribute('data-rating');
-                    ratingInput.value = rating;
-                    highlightStars(rating);
-                });
-            });
-
-            function highlightStars(rating) {
-                stars.forEach(star => {
-                    const starRating = star.getAttribute('data-rating');
-                    if (starRating <= rating) {
-                        star.style.color = '#ffc107';
-                    } else {
-                        star.style.color = '#6c757d';
-                    }
-                });
-            }
-
-            // Handle viewport height for mobile browsers
-            function setVH() {
-                let vh = window.innerHeight * 0.01;
-                document.documentElement.style.setProperty('--vh', `${vh}px`);
-            }
-
-            setVH();
-            window.addEventListener('resize', setVH);
-
-            // Improve scroll behavior for mobile
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
+            // Handle browser back/forward buttons
+            window.addEventListener('popstate', function(event) {
+                if (event.state && event.state.section) {
+                    showSection(event.state.section);
+                } else {
+                    showSection('landing');
+                }
             });
         });
-
-        function submitRating(event) {
-            event.preventDefault();
-            
-            const formData = new FormData(event.target);
-            const data = {
-                name: formData.get('name'),
-                email: formData.get('email'),
-                rating: formData.get('rating'),
-                feedback: formData.get('feedback')
-            };
-
-            // Create a template for the email body
-            const emailBody = `
-                Name: ${data.name}
-                Email: ${data.email}
-                Rating: ${data.rating} stars
-                Feedback: ${data.feedback}
-            `;
-
-            // Send email using mailto link
-            const mailtoLink = `mailto:rastosiafox@gmail.com?subject=Website Rating&body=${encodeURIComponent(emailBody)}`;
-            window.location.href = mailtoLink;
-
-            // Show success message
-            alert("Thank you for your rating! Your default email client will open to send the feedback.");
-            event.target.reset();
-            
-            // Reset stars
-            const stars = document.querySelectorAll('.star-rating .fa-star');
-            stars.forEach(star => {
-                star.style.color = '#6c757d';
-            });
-            document.getElementById('selected-rating').value = '';
-        }
-
-        // Function to open portfolio project in new tab
-        function openPortfolioProject() {
-            const portfolioHTML = document.getElementById('portfolio-project-html').innerHTML;
-            const newTab = window.open('', '_blank');
-            newTab.document.write(portfolioHTML);
-            newTab.document.close();
-        }
     </script>
-
-    <!-- Add EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </body>
-</html>
+</html> 
