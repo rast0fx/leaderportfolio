@@ -1,5 +1,5 @@
 <?php
-$section = isset($_GET['section']) ? $_GET['section'] : 'landing';
+$section = 'landing';
 ?>
 
 <!DOCTYPE html>
@@ -61,44 +61,46 @@ $section = isset($_GET['section']) ? $_GET['section'] : 'landing';
         .profile {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.5rem;
             margin-bottom: 0;
-            padding: 0.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            border: 1px solid rgba(74, 158, 255, 0.3);
         }
 
         .profile img {
-            width: 40px;
-            height: 40px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            border: 2px solid var(--accent-color);
+            border: 4px solid var(--accent-color);
             margin-bottom: 0;
             transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(74, 158, 255, 0.7);
-            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 50px rgba(74, 158, 255, 1);
+            background: rgba(255, 255, 255, 0.35);
             backdrop-filter: blur(8px);
-            padding: 3px;
-            cursor: pointer;
+            padding: 5px;
         }
 
         .profile img:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 30px rgba(74, 158, 255, 0.9);
+            transform: none;
+            box-shadow: 0 0 60px rgba(74, 158, 255, 1);
             border-color: #7ab8ff;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.4);
         }
 
         .profile h2 {
             color: var(--text-primary);
-            margin-bottom: 0;
-            font-size: 1.5rem;
+            margin-bottom: 0.2rem;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
         }
 
         .profile h3 {
             color: var(--text-secondary);
-            font-size: 1rem;
+            font-size: 1.2rem;
             margin-bottom: 0;
+            text-shadow: 0 0 8px rgba(74, 158, 255, 0.3);
         }
 
         .nav-links {
@@ -288,31 +290,74 @@ $section = isset($_GET['section']) ? $_GET['section'] : 'landing';
             }
         }
 
+        .landing-section .leader-logo {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 6px solid var(--accent-color);
+            margin-bottom: 2.5rem;
+            box-shadow: 0 0 80px rgba(74, 158, 255, 1);
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            padding: 8px;
+            animation: float 3s ease-in-out infinite;
+        }
+
         .landing-section .social-links {
-            margin-top: 2rem;
+            margin-top: 2.5rem;
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
             align-items: center;
         }
 
         .landing-section .social-links a {
-            padding: 1rem 2rem;
-            font-size: 1.2rem;
-            background: rgba(74, 158, 255, 0.2);
-            border: 1px solid rgba(74, 158, 255, 0.3);
-            backdrop-filter: blur(5px);
+            padding: 1.2rem 2.5rem;
+            font-size: 1.3rem;
+            background: rgba(74, 158, 255, 0.25);
+            border: 2px solid rgba(74, 158, 255, 0.4);
+            backdrop-filter: blur(8px);
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            border-radius: 12px;
+            gap: 1rem;
+            border-radius: 15px;
+            color: var(--text-primary);
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+        }
+
+        .landing-section .social-links a:hover {
+            transform: translateY(-5px);
+            background: rgba(74, 158, 255, 0.35);
+            border-color: rgba(74, 158, 255, 0.6);
+            box-shadow: 0 8px 25px rgba(74, 158, 255, 0.5);
         }
 
         .landing-section .social-links img {
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             object-fit: contain;
             filter: brightness(0) invert(1);
+            transition: all 0.3s ease;
+        }
+
+        .landing-section .social-links a:hover img {
+            transform: scale(1.1);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+                box-shadow: 0 0 80px rgba(74, 158, 255, 0.9);
+            }
+            50% {
+                transform: translateY(-15px);
+                box-shadow: 0 0 100px rgba(74, 158, 255, 1);
+            }
+            100% {
+                transform: translateY(0px);
+                box-shadow: 0 0 80px rgba(74, 158, 255, 0.9);
+            }
         }
 
         .enter-button {
@@ -455,23 +500,23 @@ $section = isset($_GET['section']) ? $_GET['section'] : 'landing';
     <button class="show-sidebar-button" onclick="showSidebar()">☰ Show Menu</button>
     <div class="sidebar">
         <div class="profile">
-            <img src="https://i.postimg.cc/xCFbc5Fm/leader.png" alt="LeaderWazowski Logo" onclick="toggleSidebar()">
             <div>
-                <h2>LeaderWazowski</h2>
-                <h3>3D Artist & Modeler</h3>
+                <h4>LeaderWazowski</h4>
+                <h4>3D Artist & Modeler</h4>
             </div>
         </div>
         <ul class="nav-links">
-            <li><a href="#" class="<?php echo $section === 'landing' ? 'active' : ''; ?>" onclick="showSection('landing')">Home</a></li>
-            <li><a href="#" class="<?php echo $section === 'about' ? 'active' : ''; ?>" onclick="showSection('about')">About Me</a></li>
-            <li><a href="#" class="<?php echo $section === 'projects' ? 'active' : ''; ?>" onclick="showSection('projects')">Projects</a></li>
-            <li><a href="#" class="<?php echo $section === 'prices' ? 'active' : ''; ?>" onclick="showSection('prices')">Prices</a></li>
+            <li><a href="#" onclick="showSection('landing'); return false;">Home</a></li>
+            <li><a href="#" onclick="showSection('about'); return false;">About Me</a></li>
+            <li><a href="#" onclick="showSection('projects'); return false;">Projects</a></li>
+            <li><a href="#" onclick="showSection('prices'); return false;">Prices</a></li>
         </ul>
     </div>
 
     <div class="main-content">
         <div id="landing" class="section <?php echo $section === 'landing' ? 'active' : ''; ?>">
             <div class="landing-section">
+                <img src="https://i.postimg.cc/xCFbc5Fm/leader.png" alt="LeaderWazowski Logo" class="leader-logo">
                 <h1>LeaderWazowski</h1>
                 <h2>3D Artist & Modeler</h2>
                 <div class="social-links">
@@ -484,7 +529,7 @@ $section = isset($_GET['section']) ? $_GET['section'] : 'landing';
                         Discord
                     </a>
                 </div>
-                <a href="#" class="enter-button" onclick="showSection('about')">Enter Portfolio</a>
+                <a href="#" class="enter-button" onclick="enterPortfolio(); return false;">Enter Portfolio</a>
             </div>
         </div>
 
@@ -553,7 +598,6 @@ $section = isset($_GET['section']) ? $_GET['section'] : 'landing';
                         <td>Complex models with high detail and textures</td>
                         <td>300 - 1,000 Robux</td>
                     </tr>
-                   
                     
                 </tbody>
             </table>
@@ -561,37 +605,69 @@ $section = isset($_GET['section']) ? $_GET['section'] : 'landing';
     </div>
 
     <script>
-        function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
+        function enterPortfolio() {
+            // Navigate to About section
+            showSection('about');
             
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.classList.remove('active');
-            });
-            event.target.classList.add('active');
-
-            // Show sidebar and menu button only for About, Projects, and Prices sections
-            if (sectionId === 'about' || sectionId === 'projects' || sectionId === 'prices') {
-                document.querySelector('.sidebar').classList.remove('hidden');
-                document.querySelector('.main-content').classList.remove('expanded');
-                document.querySelector('.show-sidebar-button').classList.remove('visible');
-            } else {
-                document.querySelector('.sidebar').classList.add('hidden');
-                document.querySelector('.main-content').classList.add('expanded');
-                document.querySelector('.show-sidebar-button').classList.add('visible');
-            }
-        }
-
-        function toggleSidebar() {
+            // Show the top bar
             const sidebar = document.querySelector('.sidebar');
             const mainContent = document.querySelector('.main-content');
             const showButton = document.querySelector('.show-sidebar-button');
             
-            sidebar.classList.toggle('hidden');
-            mainContent.classList.toggle('expanded');
-            showButton.classList.add('visible');
+            sidebar.classList.remove('hidden');
+            mainContent.classList.remove('expanded');
+            showButton.classList.remove('visible');
+            
+            // Highlight the About Me link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.textContent === 'About Me') {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        function showSection(sectionId) {
+            // Store the section in browser history without refreshing
+            history.pushState({ section: sectionId }, '', '?section=' + sectionId);
+            
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show the selected section
+            const selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.classList.add('active');
+            }
+            
+            // Update navigation link active states
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                const linkText = link.textContent.toLowerCase();
+                if ((linkText === 'home' && sectionId === 'landing') ||
+                    (linkText === 'about me' && sectionId === 'about') ||
+                    (linkText === 'projects' && sectionId === 'projects') ||
+                    (linkText === 'prices' && sectionId === 'prices')) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Handle sidebar visibility
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const showButton = document.querySelector('.show-sidebar-button');
+
+            if (sectionId === 'landing') {
+                sidebar.classList.add('hidden');
+                mainContent.classList.add('expanded');
+                showButton.classList.remove('visible');
+            } else {
+                sidebar.classList.remove('hidden');
+                mainContent.classList.remove('expanded');
+                showButton.classList.remove('visible');
+            }
         }
 
         function showSidebar() {
@@ -604,19 +680,26 @@ $section = isset($_GET['section']) ? $_GET['section'] : 'landing';
             showButton.classList.remove('visible');
         }
 
-        // Initialize sidebar state
+        // Initialize sidebar state and handle browser back/forward
         document.addEventListener('DOMContentLoaded', function() {
-            const section = '<?php echo $section; ?>';
-            if (section === 'landing') {
-                document.querySelector('.sidebar').classList.add('hidden');
-                document.querySelector('.main-content').classList.add('expanded');
-                document.querySelector('.show-sidebar-button').classList.add('visible');
-                document.getElementById('landing').classList.add('active');
-            } else if (section === 'about' || section === 'projects' || section === 'prices') {
-                document.querySelector('.sidebar').classList.remove('hidden');
-                document.querySelector('.main-content').classList.remove('expanded');
-                document.querySelector('.show-sidebar-button').classList.remove('visible');
-            }
+            // Always start with landing section
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            const showButton = document.querySelector('.show-sidebar-button');
+
+            sidebar.classList.add('hidden');
+            mainContent.classList.add('expanded');
+            showButton.classList.remove('visible');
+            document.getElementById('landing').classList.add('active');
+
+            // Handle browser back/forward buttons
+            window.addEventListener('popstate', function(event) {
+                if (event.state && event.state.section) {
+                    showSection(event.state.section);
+                } else {
+                    showSection('landing');
+                }
+            });
         });
     </script>
 </body>
