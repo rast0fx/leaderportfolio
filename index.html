@@ -36,7 +36,6 @@ $section = 'landing';
             background-position: center;
             background-attachment: fixed;
             background-repeat: no-repeat;
-            overflow-y: hidden;
         }
 
         body.scrollable {
@@ -138,6 +137,7 @@ $section = 'landing';
             padding: 2rem;
             width: 100%;
             transition: margin-top 0.3s ease;
+            min-height: 100vh;
         }
 
         .main-content.expanded {
@@ -631,16 +631,14 @@ $section = 'landing';
             // Navigate to About section
             showSection('about');
             
-            // Show the top bar and enable scrolling
+            // Show the top bar
             const sidebar = document.querySelector('.sidebar');
             const mainContent = document.querySelector('.main-content');
             const showButton = document.querySelector('.show-sidebar-button');
-            const body = document.body;
             
             sidebar.classList.remove('hidden');
             mainContent.classList.remove('expanded');
             showButton.classList.remove('visible');
-            body.classList.add('scrollable');
             
             // Highlight the About Me link
             document.querySelectorAll('.nav-links a').forEach(link => {
@@ -678,22 +676,19 @@ $section = 'landing';
                 }
             });
 
-            // Handle sidebar visibility and scrolling
+            // Handle sidebar visibility
             const sidebar = document.querySelector('.sidebar');
             const mainContent = document.querySelector('.main-content');
             const showButton = document.querySelector('.show-sidebar-button');
-            const body = document.body;
 
             if (sectionId === 'landing') {
                 sidebar.classList.add('hidden');
                 mainContent.classList.add('expanded');
                 showButton.classList.remove('visible');
-                body.classList.remove('scrollable');
             } else {
                 sidebar.classList.remove('hidden');
                 mainContent.classList.remove('expanded');
                 showButton.classList.remove('visible');
-                body.classList.add('scrollable');
             }
         }
 
