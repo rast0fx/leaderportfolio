@@ -51,100 +51,13 @@ $section = 'landing';
         }
 
         .sidebar {
-            width: 100%;
-            background-color: rgba(15, 41, 66, 0.95);
-            padding: 1rem;
-            position: fixed;
-            top: 0;
-            left: 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .sidebar.hidden {
-            transform: translateY(-100%);
-        }
-
-        .profile {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 0;
-            padding: 0.8rem;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 15px;
-            border: 1px solid rgba(74, 158, 255, 0.3);
-        }
-
-        .profile img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 4px solid var(--accent-color);
-            margin-bottom: 0;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 50px rgba(74, 158, 255, 1);
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(8px);
-            padding: 5px;
-        }
-
-        .profile img:hover {
-            transform: none;
-            box-shadow: 0 0 60px rgba(74, 158, 255, 1);
-            border-color: #7ab8ff;
-            background: rgba(255, 255, 255, 0.4);
-        }
-
-        .profile h2 {
-            color: var(--text-primary);
-            margin-bottom: 0.2rem;
-            font-size: 1.8rem;
-            text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
-        }
-
-        .profile h3 {
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            margin-bottom: 0;
-            text-shadow: 0 0 8px rgba(74, 158, 255, 0.3);
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 1rem;
-            margin: 0;
-            padding: 0;
-            align-items: center;
-        }
-
-        .nav-links a {
-            display: block;
-            padding: 0.8rem 1.5rem;
-            color: var(--text-primary);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-radius: 8px;
-            margin-bottom: 0;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            background-color: var(--accent-color);
-            transform: translateY(-2px);
+            display: none;
         }
 
         .main-content {
             margin-top: 0;
             padding: 2rem;
             width: 100%;
-            transition: margin-top 0.3s ease;
             min-height: 100vh;
         }
 
@@ -152,9 +65,9 @@ $section = 'landing';
             margin-top: 0;
         }
 
-        /* Add styles for when sidebar is visible */
+        /* Remove the margin-top adjustment since we don't have a sidebar */
         .main-content:not(.expanded) {
-            margin-top: 80px; /* Adjust based on your sidebar height */
+            margin-top: 0;
         }
 
         .section {
@@ -620,12 +533,134 @@ $section = 'landing';
             backdrop-filter: blur(5px);
             border: 1px solid rgba(74, 158, 255, 0.2);
         }
+
+        /* Mobile Navigation Styles */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -280px; /* Start off-screen */
+            width: 280px;
+            height: 100vh;
+            background-color: rgba(10, 25, 41, 0.98);
+            backdrop-filter: blur(10px);
+            transition: right 0.3s ease;
+            z-index: 1002;
+            padding: 1.5rem;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav .profile {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            text-align: center;
+            background: rgba(15, 41, 66, 0.6);
+            border-radius: 12px;
+            border: 1px solid rgba(74, 158, 255, 0.2);
+        }
+
+        .mobile-nav .profile h4 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin: 0.5rem 0;
+            font-weight: 500;
+        }
+
+        .mobile-nav .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem; /* Increased gap between buttons */
+        }
+
+        .mobile-nav .nav-links a {
+            width: 100%;
+            text-align: left;
+            padding: 1rem 1.2rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+            text-decoration: none;
+            background: rgba(15, 41, 66, 0.6);
+            border: 1px solid rgba(74, 158, 255, 0.2);
+            font-size: 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .mobile-nav .nav-links a:hover,
+        .mobile-nav .nav-links a.active {
+            background-color: var(--accent-color);
+            transform: translateX(5px);
+            border-color: rgba(74, 158, 255, 0.4);
+        }
+
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            z-index: 1001;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .mobile-menu-button {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent-color);
+            color: var(--text-primary);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1003;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-menu-button:hover {
+            background: #7ab8ff;
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-button.visible {
+            display: flex;
+        }
+
+        .mobile-menu-button.active {
+            background: #7ab8ff;
+        }
     </style>
 </head>
 <body>
     <div class="watermark">Made by Mhamad Koussa (rast0fx)</div>
-    <button class="show-sidebar-button" onclick="showSidebar()">☰ Show Menu</button>
-    <div class="sidebar">
+    <button class="mobile-menu-button" onclick="toggleMobileNav()">☰</button>
+    <div class="mobile-nav-overlay" onclick="toggleMobileNav()"></div>
+    <div class="mobile-nav">
         <div class="profile">
             <div>
                 <h4>LeaderWazowski</h4>
@@ -633,10 +668,10 @@ $section = 'landing';
             </div>
         </div>
         <ul class="nav-links">
-            <li><a href="#" onclick="showSection('landing'); return false;">Home</a></li>
-            <li><a href="#" onclick="showSection('about'); return false;">About Me</a></li>
-            <li><a href="#" onclick="showSection('projects'); return false;">Projects</a></li>
-            <li><a href="#" onclick="showSection('prices'); return false;">Prices</a></li>
+            <li><a href="#" onclick="showSection('landing'); toggleMobileNav(); return false;">Home</a></li>
+            <li><a href="#" onclick="showSection('about'); toggleMobileNav(); return false;">About Me</a></li>
+            <li><a href="#" onclick="showSection('projects'); toggleMobileNav(); return false;">Projects</a></li>
+            <li><a href="#" onclick="showSection('prices'); toggleMobileNav(); return false;">Prices</a></li>
         </ul>
     </div>
 
@@ -748,6 +783,8 @@ $section = 'landing';
         function enterPortfolio() {
             showSection('about');
             updateLayout();
+            // Show mobile menu button after entering portfolio
+            document.querySelector('.mobile-menu-button').classList.add('visible');
         }
 
         function showSection(sectionId) {
@@ -777,34 +814,39 @@ $section = 'landing';
                 }
             });
 
+            // Close mobile nav if it's open
+            const mobileNav = document.querySelector('.mobile-nav');
+            const overlay = document.querySelector('.mobile-nav-overlay');
+            const menuButton = document.querySelector('.mobile-menu-button');
+            
+            if (mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+                menuButton.classList.remove('active');
+            }
+
             updateLayout();
         }
 
         function updateLayout() {
-            const sidebar = document.querySelector('.sidebar');
             const mainContent = document.querySelector('.main-content');
-            const showButton = document.querySelector('.show-sidebar-button');
             const currentSection = document.querySelector('.section.active').id;
 
             if (currentSection === 'landing') {
-                sidebar.classList.add('hidden');
                 mainContent.classList.add('expanded');
-                showButton.classList.remove('visible');
             } else {
-                sidebar.classList.remove('hidden');
                 mainContent.classList.remove('expanded');
-                showButton.classList.remove('visible');
             }
         }
 
-        function showSidebar() {
-            const sidebar = document.querySelector('.sidebar');
-            const mainContent = document.querySelector('.main-content');
-            const showButton = document.querySelector('.show-sidebar-button');
+        function toggleMobileNav() {
+            const mobileNav = document.querySelector('.mobile-nav');
+            const overlay = document.querySelector('.mobile-nav-overlay');
+            const menuButton = document.querySelector('.mobile-menu-button');
             
-            sidebar.classList.remove('hidden');
-            mainContent.classList.remove('expanded');
-            showButton.classList.remove('visible');
+            mobileNav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            menuButton.classList.toggle('active');
         }
 
         // Handle window resize
@@ -815,23 +857,17 @@ $section = 'landing';
             }
         }, 250);
 
-        // Initialize sidebar state and handle browser back/forward
+        // Initialize layout
         document.addEventListener('DOMContentLoaded', function() {
-            // Get section from URL or default to landing
-            const urlParams = new URLSearchParams(window.location.search);
-            const section = urlParams.get('section') || 'landing';
+            // Always start with the landing section
+            showSection('landing');
             
             // Initialize layout
-            const sidebar = document.querySelector('.sidebar');
             const mainContent = document.querySelector('.main-content');
-            const showButton = document.querySelector('.show-sidebar-button');
-
-            sidebar.classList.add('hidden');
             mainContent.classList.add('expanded');
-            showButton.classList.remove('visible');
-            
-            // Show appropriate section
-            showSection(section);
+
+            // Hide mobile menu button initially
+            document.querySelector('.mobile-menu-button').classList.remove('visible');
 
             // Add event listeners
             window.addEventListener('resize', handleResize);
@@ -844,33 +880,34 @@ $section = 'landing';
             });
 
             // Handle touch events for mobile
-            let touchStartY = 0;
-            let touchEndY = 0;
+            let touchStartX = 0;
+            let touchEndX = 0;
 
             document.addEventListener('touchstart', e => {
-                touchStartY = e.changedTouches[0].screenY;
+                touchStartX = e.changedTouches[0].screenX;
             }, false);
 
             document.addEventListener('touchend', e => {
-                touchEndY = e.changedTouches[0].screenY;
+                touchEndX = e.changedTouches[0].screenX;
                 handleSwipe();
             }, false);
 
             function handleSwipe() {
                 const swipeThreshold = 50;
-                const swipeDistance = touchEndY - touchStartY;
+                const swipeDistance = touchEndX - touchStartX;
+                const menuButton = document.querySelector('.mobile-menu-button');
 
-                if (Math.abs(swipeDistance) > swipeThreshold) {
-                    const currentSection = document.querySelector('.section.active').id;
-                    const sections = ['landing', 'about', 'projects', 'prices'];
-                    const currentIndex = sections.indexOf(currentSection);
-
-                    if (swipeDistance > 0 && currentIndex > 0) {
-                        // Swipe down - go to previous section
-                        showSection(sections[currentIndex - 1]);
-                    } else if (swipeDistance < 0 && currentIndex < sections.length - 1) {
-                        // Swipe up - go to next section
-                        showSection(sections[currentIndex + 1]);
+                // Only handle swipes if the menu button is visible
+                if (menuButton.classList.contains('visible')) {
+                    if (Math.abs(swipeDistance) > swipeThreshold) {
+                        const mobileNav = document.querySelector('.mobile-nav');
+                        if (swipeDistance > 0 && !mobileNav.classList.contains('active')) {
+                            // Swipe right - open menu
+                            toggleMobileNav();
+                        } else if (swipeDistance < 0 && mobileNav.classList.contains('active')) {
+                            // Swipe left - close menu
+                            toggleMobileNav();
+                        }
                     }
                 }
             }
