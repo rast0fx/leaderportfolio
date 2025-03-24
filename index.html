@@ -152,6 +152,11 @@ $section = 'landing';
             margin-top: 0;
         }
 
+        /* Add styles for when sidebar is visible */
+        .main-content:not(.expanded) {
+            margin-top: 80px; /* Adjust based on your sidebar height */
+        }
+
         .section {
             display: none;
             animation: fadeIn 0.5s ease-in-out;
@@ -448,12 +453,25 @@ $section = 'landing';
         }
 
         @media screen and (max-width: 768px) {
+            .main-content:not(.expanded) {
+                margin-top: 120px; /* Increased margin for mobile to account for taller sidebar */
+            }
+
             .sidebar {
                 flex-direction: column;
                 padding: 1rem;
                 height: auto;
                 max-height: 90vh;
                 overflow-y: auto;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                background-color: rgba(15, 41, 66, 0.98);
+            }
+
+            .sidebar.hidden {
+                transform: translateY(-100%);
             }
 
             .profile {
